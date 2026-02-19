@@ -25,11 +25,19 @@ public class Game {
 
         while (true) {
             board.printBoard();
+            int x;
+            int y;
 
-            System.out.println(currentPlayer.getName() + "- Indicate x position");
-            int x = scanner.nextInt();
-            System.out.println(currentPlayer.getName() + "- Indicate y position");
-            int y = scanner.nextInt();
+            try {
+                System.out.println(currentPlayer.getName() + "- Indicate x position");
+                x = scanner.nextInt();
+                System.out.println(currentPlayer.getName() + "- Indicate y position");
+                y = scanner.nextInt();
+            } catch (Exception e) {
+                System.out.println(e);
+                scanner.nextLine();
+                continue;
+            }
 
             if (!board.placeMove(x, y, currentPlayer.getSymbolValue())) {
                 System.out.println("Play again");

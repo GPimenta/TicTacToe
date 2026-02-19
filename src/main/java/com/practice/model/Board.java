@@ -29,7 +29,7 @@ public class Board {
     }
 
     private boolean checkIfPositionValid(int x, int y) {
-        if (x >= 3 || y >= 3) {
+        if (x < 0 || x >= 3 || y < 0 || y >= 3) {
             System.out.println("Position outbound");
             return false;
         }
@@ -68,29 +68,37 @@ public class Board {
 
     public boolean hasWinner() {
         //Rows
-        if (board[0][0] != Symbol.Empty && board[0][0] == board[0][1] && board[0][1] == board[0][2]) {
-            return true;
-        } else if(board[1][0] != Symbol.Empty && board[1][0] == board[1][1] && board[1][1] == board[1][2]) {
-            return true;
-        } else if (board[2][0] != Symbol.Empty && board[2][0] == board[2][1] && board[2][1] == board[2][2]) {
+        for (int row = 0; row < 3; row++) {
+            if (board[row][0] != Symbol.Empty &&
+                    board[row][0] == board[row][1] &&
+                    board[row][1] == board[row][2]) {
+                return true;
+            }
+        }
+        //Columns
+        for (int col = 0; col < 3; col++) {
+            if (board[0][col] != Symbol.Empty &&
+                    board[0][col] == board[1][col] &&
+                    board[1][col] == board[2][col]) {
+                return true;
+            }
+        }
+        //Right to left Diagonal
+        if (board[0][0] != Symbol.Empty &&
+                board[0][0] == board[1][1] &&
+                board[1][1] == board[2][2]) {
             return true;
         }
-        // Columns
-        if (board[0][0] != Symbol.Empty && board[0][0] == board[1][0] && board[1][0] == board[2][0]) {
-            return true;
-        } else if (board[0][1] != Symbol.Empty && board[0][1] == board[1][1] && board[1][1] == board[2][1]) {
-            return true;
-        } else if (board[0][2] != Symbol.Empty && board[0][2] == board[1][2] && board[1][2] == board[2][2]) {
+        //Left to Right Diagonal
+        if (board[0][2] != Symbol.Empty &&
+                board[0][2] == board[1][1] &&
+                board[1][1] == board[2][0]) {
             return true;
         }
-        //Diagonal
-        if (board[0][0] != Symbol.Empty && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-            return true;
-        } else if (board[0][2] != Symbol.Empty && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-            return true;
-        }
+
         return false;
     }
+
 
     public Symbol getSymbol(int x, int y) {
         return board[y][x];
