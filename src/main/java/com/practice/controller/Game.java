@@ -1,6 +1,7 @@
 package com.practice.controller;
 
 import com.practice.model.Board;
+import com.practice.model.HumanPlayer;
 import com.practice.model.Player;
 
 import java.util.Scanner;
@@ -11,10 +12,10 @@ public class Game {
     private Player player2;
     private Player currentPlayer;
 
-    public Game(Board board, Player player1, Player player2) {
+    public Game(Board board, HumanPlayer humanPlayer1, HumanPlayer humanPlayer2) {
         this.board = board;
-        this.player1 = player1;
-        this.player2 = player2;
+        this.player1 = humanPlayer1;
+        this.player2 = humanPlayer2;
     }
 
     public void runGame() {
@@ -25,21 +26,17 @@ public class Game {
 
         while (true) {
             board.printBoard();
-            int x;
-            int y;
+            int[] move;
 
             try {
-                System.out.println(currentPlayer.getName() + "- Indicate x position");
-                x = scanner.nextInt();
-                System.out.println(currentPlayer.getName() + "- Indicate y position");
-                y = scanner.nextInt();
+                move = currentPlayer.makeMove(board);
             } catch (Exception e) {
                 System.out.println(e);
                 scanner.nextLine();
                 continue;
             }
 
-            if (!board.placeMove(x, y, currentPlayer.getSymbolValue())) {
+            if (!board.placeMove(move[0], move[1], currentPlayer.getSymbolValue())) {
                 System.out.println("Play again");
                 continue;
             }
