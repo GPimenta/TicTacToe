@@ -6,18 +6,19 @@ public class HumanPlayer extends Player {
     private String name;
     private Symbol symbolValue;
     private int score;
+    private Scanner scanner;
 
-    public HumanPlayer(String name, Symbol symbolValue) {
+    public HumanPlayer(String name, Symbol symbolValue, Scanner scanner) {
         this.name = name;
         this.symbolValue = symbolValue;
         this.score = 0;
+        this.scanner = scanner;
     }
 
     @Override
     public int[] makeMove(Board board) {
         int[] position = new int[2];
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println(this.name + "- Indicate x position");
         position[0] = scanner.nextInt();
         System.out.println(this.name + "- Indicate y position");

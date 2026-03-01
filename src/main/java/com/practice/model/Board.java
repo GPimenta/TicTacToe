@@ -20,7 +20,7 @@ public class Board {
     }
 
     public boolean placeMove(int x, int y, Symbol value) {
-        if (isNotFull() && checkIfPositionValid(x, y)) {
+        if (!isFull() && checkIfPositionValid(x, y)) {
             this.board[y][x] = value;
             return true;
         } else {
@@ -40,14 +40,15 @@ public class Board {
         return true;
     }
 
-    public boolean isNotFull() {
+    public boolean isFull() {
         for (Symbol[] symbols : board) {
             if (Arrays.stream(symbols).anyMatch(symbol -> symbol == Symbol.Empty)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
+
 
     public void printBoard() {
         System.out.println("  0 1 2");
@@ -102,6 +103,10 @@ public class Board {
 
     public Symbol getSymbol(int x, int y) {
         return board[y][x];
+    }
+
+    public void setSymbol(int x, int y, Symbol symbol) {
+        board[y][x] = symbol;
     }
 
     @Override

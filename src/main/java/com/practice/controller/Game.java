@@ -1,7 +1,6 @@
 package com.practice.controller;
 
 import com.practice.model.Board;
-import com.practice.model.HumanPlayer;
 import com.practice.model.Player;
 
 import java.util.Scanner;
@@ -12,10 +11,10 @@ public class Game {
     private Player player2;
     private Player currentPlayer;
 
-    public Game(Board board, HumanPlayer humanPlayer1, HumanPlayer humanPlayer2) {
+    public Game(Board board, Player humanPlayer, Player computerPlayer) {
         this.board = board;
-        this.player1 = humanPlayer1;
-        this.player2 = humanPlayer2;
+        this.player1 = humanPlayer;
+        this.player2 = computerPlayer;
     }
 
     public void runGame() {
@@ -45,7 +44,7 @@ public class Game {
                 System.out.println(currentPlayer.getName() + " - Win the game");
                 board.printBoard();
                 return;
-            } else if (!board.isNotFull()) {
+            } else if (board.isFull()) {
                 System.out.println("It is a draw");
                 board.printBoard();
                 return;
