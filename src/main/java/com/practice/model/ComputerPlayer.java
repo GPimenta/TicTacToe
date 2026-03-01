@@ -3,29 +3,60 @@ package com.practice.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComputerPlayer extends  Player{
+public class ComputerPlayer extends Player {
     private String name;
     private Symbol symbolValue;
     private int score;
-    private Symbol oponentSymbolValue;
+    private final Symbol opponentSymbolValue;
+    private final Difficulty difficulty;
 
-    public ComputerPlayer(Symbol symbolValue) {
+    public ComputerPlayer(Symbol symbolValue, Difficulty difficulty) {
         this.name = "Computer";
         this.symbolValue = symbolValue;
         this.score = 0;
-        this.oponentSymbolValue = symbolValue == Symbol.X ? Symbol.O : Symbol.X;
+        this.opponentSymbolValue = symbolValue == Symbol.X ? Symbol.O : Symbol.X;
+        this.difficulty = difficulty;
     }
 
     @Override
     public int[] makeMove(Board board) {
         int[] move;
 
+        if (difficulty == Difficulty.EASY) {
+//            System.out.println("Running Easy");
+            return findRandomMove(board);
+        }
+
+        if (difficulty == Difficulty.MEDIUM) {
+            System.out.println("Running Medium");
+            move = findWinningMove(board);
+            if (move != null) {
+                return move;
+            }
+            move = findBlockingMove(board);
+            if (move != null) {
+                return move;
+            }
+            return findRandomMove(board);
+        }
+
+        System.out.println("Running Hard");
         move = findWinningMove(board);
         if (move != null) {
             return move;
         }
 
         move = findBlockingMove(board);
+        if (move != null) {
+            return move;
+        }
+
+        move = takeCentre(board);
+        if (move != null) {
+            return move;
+        }
+
+        move = takeCorners(board);
         if (move != null) {
             return move;
         }
@@ -54,7 +85,7 @@ public class ComputerPlayer extends  Player{
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 if (board.getSymbol(col, row) == Symbol.Empty) {
-                    board.setSymbol(col, row, oponentSymbolValue);
+                    board.setSymbol(col, row, opponentSymbolValue);
 
                     if (board.hasWinner()) {
                         board.setSymbol(col, row, Symbol.Empty);
@@ -63,6 +94,29 @@ public class ComputerPlayer extends  Player{
                         board.setSymbol(col, row, Symbol.Empty);
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    private int[] takeCentre(Board board) {
+        if (board.getSymbol(1,1) == Symbol.Empty) {
+            return new int[]{1, 1};
+        }
+        return null;
+    }
+
+    private int[] takeCorners(Board board) {
+        List<int[]> list = new ArrayList<>();
+
+        list.add(new int[]{0,0});
+        list.add(new int[]{0,2});
+        list.add(new int[]{2,0});
+        list.add(new int[]{2,2});
+
+        for (int[] corner : list) {
+            if (board.getSymbol(corner[0], corner[1]) == Symbol.Empty) {
+                return corner;
             }
         }
         return null;

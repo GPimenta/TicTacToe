@@ -19,7 +19,6 @@ public class Game {
 
     public void runGame() {
         System.out.println("Running game");
-        Scanner scanner = new Scanner(System.in);
 
         currentPlayer = player1;
 
@@ -31,7 +30,6 @@ public class Game {
                 move = currentPlayer.makeMove(board);
             } catch (Exception e) {
                 System.out.println(e);
-                scanner.nextLine();
                 continue;
             }
 

@@ -29,9 +29,11 @@ public class App
 
             System.out.println("Enter name for Player 1 (X): ");
             String name1 = scanner.nextLine();
+            System.out.println("Enter the difficulty: EASY, MEDIUM or HARD");
+            String difficulty = scanner.nextLine();
 
             Player humanPlayer = new HumanPlayer(name1, Symbol.X, scanner);
-            Player computerPlayer = new ComputerPlayer(Symbol.O);
+            Player computerPlayer = new ComputerPlayer(Symbol.O, difficulty.equalsIgnoreCase("easy") ? Difficulty.EASY: difficulty.equalsIgnoreCase("medium")? Difficulty.MEDIUM : Difficulty.HARD);
             game = new Game(board, humanPlayer, computerPlayer);
 
         }
