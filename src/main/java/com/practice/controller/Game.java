@@ -11,13 +11,29 @@ public class Game {
     private Player player2;
     private Player currentPlayer;
 
-    public Game(Board board, Player humanPlayer, Player computerPlayer) {
+    public Game(Board board, Player player1, Player player2) {
         this.board = board;
-        this.player1 = humanPlayer;
-        this.player2 = computerPlayer;
+        this.player1 = player1;
+        this.player2 = player2;
     }
 
     public void runGame() {
+        Scanner scanner = new Scanner(System.in);
+        String playAgain;
+
+        do {
+            playMatch();
+            boardScore();
+
+            System.out.println("Want to play again? y/n");
+            playAgain = scanner.nextLine();
+            board.reset();
+
+        } while (playAgain.equalsIgnoreCase("y"));
+
+    }
+
+    public void playMatch() {
         System.out.println("Running game");
 
         currentPlayer = player1;
@@ -40,6 +56,7 @@ public class Game {
 
             if (board.hasWinner()) {
                 System.out.println(currentPlayer.getName() + " - Win the game");
+                currentPlayer.addScore();
                 board.printBoard();
                 return;
             } else if (board.isFull()) {
@@ -48,12 +65,17 @@ public class Game {
                 return;
 
             }
-
-            if (currentPlayer == player1) {
-                currentPlayer = player2;
-            } else {
-                currentPlayer = player1;
-            }
+            switchPlayer();
         }
+    }
+
+    private void boardScore() {
+        System.out.println("Score:");
+        System.out.println(player1.getName()+" -> "+player1.getScore());
+        System.out.println(player2.getName()+" -> "+player2.getScore());
+    }
+
+    private void switchPlayer() {
+        currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 }

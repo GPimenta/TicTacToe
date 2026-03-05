@@ -15,7 +15,7 @@ public class App
         Game game;
 
         System.out.println("Play with Friend or Computer?");
-        if (Objects.equals(scanner.nextLine(), "Friend")) {
+        if (Objects.equals(scanner.nextLine().toLowerCase(), "friend")) {
 
             System.out.println("Enter name for Player 1 (X): ");
             String name1 = scanner.nextLine();

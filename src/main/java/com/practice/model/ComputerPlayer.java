@@ -11,9 +11,7 @@ public class ComputerPlayer extends Player {
     private final Difficulty difficulty;
 
     public ComputerPlayer(Symbol symbolValue, Difficulty difficulty) {
-        this.name = "Computer";
-        this.symbolValue = symbolValue;
-        this.score = 0;
+        super("Computer", symbolValue);
         this.opponentSymbolValue = symbolValue == Symbol.X ? Symbol.O : Symbol.X;
         this.difficulty = difficulty;
     }
@@ -135,33 +133,4 @@ public class ComputerPlayer extends Player {
 
         return list.get((int)(Math.random() * list.size()));
     }
-
-
-    public String getName() { return name;}
-
-    public void setName(String name) { this.name = name;}
-
-    public Symbol getSymbolValue() {
-        return symbolValue;
-    }
-
-    public void setSymbolValue(Symbol symbolValue) {
-        this.symbolValue = symbolValue;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void addScore() {
-        this.score++;
-    }
-
-    public void resetScore() {
-        this.score = 0;
-    }
-
-
-
-
 }

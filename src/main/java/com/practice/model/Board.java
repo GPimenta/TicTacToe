@@ -100,6 +100,15 @@ public class Board {
         return false;
     }
 
+    public void reset() {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                setSymbol(row, col, Symbol.Empty);
+            }
+        }
+        System.out.println("New Board");
+    }
+
 
     public Symbol getSymbol(int x, int y) {
         return board[y][x];
