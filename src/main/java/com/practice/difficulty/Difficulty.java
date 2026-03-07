@@ -1,4 +1,4 @@
-package com.practice.model;
+package com.practice.difficulty;
 
 public enum Difficulty {
     EASY,

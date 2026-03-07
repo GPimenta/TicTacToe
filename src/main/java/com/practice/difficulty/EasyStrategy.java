@@ -1,4 +1,8 @@
-package com.practice.model;
+package com.practice.difficulty;
+
+import com.practice.model.Board;
+import com.practice.model.MoveStrategy;
+import com.practice.model.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;

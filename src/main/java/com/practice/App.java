@@ -1,6 +1,7 @@
 package com.practice;
 
 import com.practice.controller.Game;
+import com.practice.difficulty.Difficulty;
 import com.practice.model.*;
 
 import java.util.Objects;

@@ -66,7 +66,6 @@ public class Board {
         }
     }
 
-
     public boolean hasWinner() {
         //Rows
         for (int row = 0; row < 3; row++) {

@@ -1,7 +1,9 @@
 package com.practice.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.practice.difficulty.Difficulty;
+import com.practice.difficulty.EasyStrategy;
+import com.practice.difficulty.HardStrategy;
+import com.practice.difficulty.MediumStrategy;
 
 public class ComputerPlayer extends Player {
     private Symbol symbolValue;
