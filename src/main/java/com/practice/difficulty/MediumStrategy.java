@@ -25,8 +25,8 @@ public class MediumStrategy implements MoveStrategy {
     }
 
     private int[] findWinningMove(Board board, Symbol symbolValue) {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
                 if (board.getSymbol(col, row) == Symbol.Empty) {
                     board.setSymbol(col, row, symbolValue);
                     if (board.hasWinner()) {
@@ -42,8 +42,8 @@ public class MediumStrategy implements MoveStrategy {
     }
 
     private int[] findBlockingMove(Board board, Symbol opponentSymbolValue) {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
                 if (board.getSymbol(col, row) == Symbol.Empty) {
                     board.setSymbol(col, row, opponentSymbolValue);
 
@@ -62,8 +62,8 @@ public class MediumStrategy implements MoveStrategy {
     private int[] findRandomMove(Board board) {
         List<int[]> list = new ArrayList<>();
 
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
                 if (board.getSymbol(col, row) == Symbol.Empty) {
                     list.add(new int[]{col, row});
                 }

@@ -14,6 +14,7 @@ public class HumanPlayer extends Player {
     public int[] makeMove(Board board) {
         int[] position = new int[2];
 
+        scanner.nextLine();
         System.out.println(super.getName() + " - Indicate x position");
         position[0] = scanner.nextInt();
         System.out.println(this.getName() + " - Indicate y position");

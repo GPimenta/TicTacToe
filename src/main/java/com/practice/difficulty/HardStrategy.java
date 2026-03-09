@@ -37,8 +37,8 @@ public class HardStrategy implements MoveStrategy {
     }
 
     private int[] findWinningMove(Board board, Symbol symbolValue) {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
                 if (board.getSymbol(col, row) == Symbol.Empty) {
                     board.setSymbol(col, row, symbolValue);
                     if (board.hasWinner()) {
@@ -54,8 +54,8 @@ public class HardStrategy implements MoveStrategy {
     }
 
     private int[] findBlockingMove(Board board, Symbol opponentSymbolValue) {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
                 if (board.getSymbol(col, row) == Symbol.Empty) {
                     board.setSymbol(col, row, opponentSymbolValue);
 
@@ -74,8 +74,8 @@ public class HardStrategy implements MoveStrategy {
     private int[] findRandomMove(Board board) {
         List<int[]> list = new ArrayList<>();
 
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
                 if (board.getSymbol(col, row) == Symbol.Empty) {
                     list.add(new int[]{col, row});
                 }
@@ -85,19 +85,22 @@ public class HardStrategy implements MoveStrategy {
     }
 
     private int[] takeCentre(Board board) {
-        if (board.getSymbol(1,1) == Symbol.Empty) {
-            return new int[]{1, 1};
+        int centre = board.getSize()/2;
+
+        if (board.getSymbol(centre,centre) == Symbol.Empty) {
+            return new int[]{centre, centre};
         }
         return null;
     }
 
     private int[] takeCorners(Board board) {
         List<int[]> list = new ArrayList<>();
+        int max = board.getSize() - 1;
 
         list.add(new int[]{0,0});
-        list.add(new int[]{0,2});
-        list.add(new int[]{2,0});
-        list.add(new int[]{2,2});
+        list.add(new int[]{0, max});
+        list.add(new int[]{max,0});
+        list.add(new int[]{max, max});
 
         for (int[] corner : list) {
             if (board.getSymbol(corner[0], corner[1]) == Symbol.Empty) {

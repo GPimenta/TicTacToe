@@ -3,20 +3,13 @@ package com.practice.model;
 import java.util.Arrays;
 
 public class Board {
-    private Symbol[][] board = new Symbol[3][3];
+    private Symbol[][] board;
+    private int size;
 
-    public Board() {
-        board[0] = new Symbol[]{Symbol.Empty, Symbol.Empty, Symbol.Empty};
-        board[1] = new Symbol[] {Symbol.Empty, Symbol.Empty, Symbol.Empty};
-        board[2] = new Symbol[] {Symbol.Empty, Symbol.Empty, Symbol.Empty};
-    }
-
-    public Symbol[][] getBoard() {
-        return board;
-    }
-
-    public void setBoard(Symbol[][] board) {
-        this.board = board;
+    public Board(int size) {
+        this.size = size;
+        board = new Symbol[size][size];
+        emptyBoard();
     }
 
     public boolean placeMove(int x, int y, Symbol value) {
@@ -29,7 +22,7 @@ public class Board {
     }
 
     private boolean checkIfPositionValid(int x, int y) {
-        if (x < 0 || x >= 3 || y < 0 || y >= 3) {
+        if (x < 0 || x >= size || y < 0 || y >= size) {
             System.out.println("Position outbound");
             return false;
         }
@@ -49,12 +42,130 @@ public class Board {
         return true;
     }
 
+    public boolean hasWinner() {
+        //Rows
+        for (int row = 0; row < getSize(); row++) {
+            Symbol first = board[row][0];
+            if (first == Symbol.Empty) {
+                continue;
+            }
+
+            boolean win = true;
+            for (int col = 1; col < size; col++) {
+                if (board[row][col] != first) {
+                    win = false;
+                    break;
+                }
+            }
+            if (win) {
+                return true;
+            }
+
+
+        }
+
+//        //Rows
+//        for (int row = 0; row < 3; row++) {
+//            if (board[row][0] != Symbol.Empty &&
+//                    board[row][0] == board[row][1] &&
+//                    board[row][1] == board[row][2]) {
+//                return true;
+//            }
+//        }
+        //Columns
+        for (int col = 0; col < getSize(); col++) {
+            Symbol first = board[0][col];
+            if (first == Symbol.Empty) {
+                continue;
+            }
+
+            boolean win = true;
+            for (int row = 1; row < size; row++) {
+                if (board[row][col] != first) {
+                    win = false;
+                    break;
+                }
+            }
+            if (win) return true;
+        }
+
+//        //Columns
+//        for (int col = 0; col < 3; col++) {
+//            if (board[0][col] != Symbol.Empty &&
+//                    board[0][col] == board[1][col] &&
+//                    board[1][col] == board[2][col]) {
+//                return true;
+//            }
+//        }
+
+
+
+        //Right to left Diagonal
+        Symbol firstDiag = board[0][0];
+        if (firstDiag != Symbol.Empty) {
+            boolean win = true;
+
+            for (int i = 1; i < getSize(); i++) {
+                if (board[i][i] != firstDiag) {
+                    win = false;
+                    break;
+                }
+            }
+            if (win){
+                return true;
+            }
+        }
+
+
+//        if (board[0][0] != Symbol.Empty &&
+//                board[0][0] == board[1][1] &&
+//                board[1][1] == board[2][2]) {
+//            return true;
+//        }
+
+        //Left to Right Diagonal
+        Symbol firstAnti = board[0][size - 1];
+        if (firstAnti != Symbol.Empty) {
+            boolean win = true;
+
+            for (int i = 1; i < size; i++) {
+                if (board[i][size - 1 - i] != firstAnti) {
+                    win = false;
+                    break;
+                }
+            }
+
+            if (win) return true;
+        }
+
+//        if (board[0][2] != Symbol.Empty &&
+//                board[0][2] == board[1][1] &&
+//                board[1][1] == board[2][0]) {
+//            return true;
+//        }
+
+        return false;
+    }
+
+    public void reset() {
+        for (int row = 0; row < getSize(); row++) {
+            for (int col = 0; col < getSize(); col++) {
+                setSymbol(row, col, Symbol.Empty);
+            }
+        }
+        System.out.println("New Board");
+    }
 
     public void printBoard() {
-        System.out.println("  0 1 2");
-        for (int row = 0; row < 3; row++) {
+        StringBuilder xAxis = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            xAxis.append(" ").append(i);
+        }
+        System.out.println(xAxis.toString());
+//        System.out.println("  0 1 2");
+        for (int row = 0; row < getSize(); row++) {
             System.out.print(row + " ");
-            for (int col = 0; col < 3; col++) {
+            for (int col = 0; col < getSize(); col++) {
                 Symbol symbol = board[row][col];
                 if (symbol == Symbol.Empty) {
                     System.out.print("  ");
@@ -66,48 +177,13 @@ public class Board {
         }
     }
 
-    public boolean hasWinner() {
-        //Rows
-        for (int row = 0; row < 3; row++) {
-            if (board[row][0] != Symbol.Empty &&
-                    board[row][0] == board[row][1] &&
-                    board[row][1] == board[row][2]) {
-                return true;
-            }
-        }
-        //Columns
-        for (int col = 0; col < 3; col++) {
-            if (board[0][col] != Symbol.Empty &&
-                    board[0][col] == board[1][col] &&
-                    board[1][col] == board[2][col]) {
-                return true;
-            }
-        }
-        //Right to left Diagonal
-        if (board[0][0] != Symbol.Empty &&
-                board[0][0] == board[1][1] &&
-                board[1][1] == board[2][2]) {
-            return true;
-        }
-        //Left to Right Diagonal
-        if (board[0][2] != Symbol.Empty &&
-                board[0][2] == board[1][1] &&
-                board[1][1] == board[2][0]) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public void reset() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+    private void emptyBoard() {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
                 setSymbol(row, col, Symbol.Empty);
             }
         }
-        System.out.println("New Board");
     }
-
 
     public Symbol getSymbol(int x, int y) {
         return board[y][x];
@@ -115,6 +191,18 @@ public class Board {
 
     public void setSymbol(int x, int y, Symbol symbol) {
         board[y][x] = symbol;
+    }
+
+    public Symbol[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(Symbol[][] board) {
+        this.board = board;
+    }
+
+    public int getSize() {
+        return  board.length;
     }
 
     @Override
