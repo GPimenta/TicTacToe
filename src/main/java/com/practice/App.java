@@ -12,12 +12,17 @@ public class App
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
-        Board board = new Board();
         Game game;
 
-        System.out.println("Play with Friend or Computer?");
-        if (Objects.equals(scanner.nextLine().toLowerCase(), "friend")) {
+        System.out.println("Indicate the size of the board");
+        int size = scanner.nextInt();
+        Board board = new Board(size);
+        scanner.nextLine();
 
+        System.out.println("Play with Friend or Computer?");
+        String adversary = scanner.nextLine().toLowerCase();
+
+        if (Objects.equals(adversary, "friend")) {
             System.out.println("Enter name for Player 1 (X): ");
             String name1 = scanner.nextLine();
             System.out.println("Enter name for Player 2 (O): ");
@@ -27,7 +32,6 @@ public class App
             Player humanPlayer2 = new HumanPlayer(name2, Symbol.O, scanner);
             game = new Game(board, humanPlayer, humanPlayer2);
         } else {
-
             System.out.println("Enter name for Player 1 (X): ");
             String name1 = scanner.nextLine();
             System.out.println("Enter the difficulty: EASY, MEDIUM or HARD");

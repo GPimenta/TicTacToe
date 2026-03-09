@@ -148,8 +148,8 @@ public class Board {
     }
 
     public void reset() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < getSize(); row++) {
+            for (int col = 0; col < getSize(); col++) {
                 setSymbol(row, col, Symbol.Empty);
             }
         }
@@ -157,10 +157,15 @@ public class Board {
     }
 
     public void printBoard() {
-        System.out.println("  0 1 2");
-        for (int row = 0; row < 3; row++) {
+        StringBuilder xAxis = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            xAxis.append(" ").append(i);
+        }
+        System.out.println(xAxis.toString());
+//        System.out.println("  0 1 2");
+        for (int row = 0; row < getSize(); row++) {
             System.out.print(row + " ");
-            for (int col = 0; col < 3; col++) {
+            for (int col = 0; col < getSize(); col++) {
                 Symbol symbol = board[row][col];
                 if (symbol == Symbol.Empty) {
                     System.out.print("  ");
